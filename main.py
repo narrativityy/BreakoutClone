@@ -17,10 +17,18 @@ paddle_speed = 800
 ball_x = screen.get_width() / 2
 ball_y = screen.get_height() / 2
 ball_radius = 20
+ball_speed = 400
+ball_x_direction = 1
+ball_y_direction = 1
 
 # game loop
 while running:
+    # setting fps and delta time
+    dt = clock.tick(60) / 1000
+
+    # handling events
     for event in pygame.event.get():
+        # quit
         if event.type == pygame.QUIT:
             running = False
 
@@ -52,10 +60,30 @@ while running:
         else:
             paddle_left += paddle_speed * dt
 
+    # ball movement
+    ball_x += ball_x_direction * ball_speed * dt
+    ball_y += ball_y_direction * ball_speed * dt
+
+    # ball collision
+
+    # wall collision
+    if ball_x - ball_radius <= 0 or ball_x + ball_radius >= screen.get_width():
+        ball_x_direction *= -1
+    if ball_y - ball_radius <= 0:
+        ball_y_direction *= -1
+    if ball_y + ball_radius >= screen.get_height():
+        ball_x = screen.get_width() / 2
+        ball_y = screen.get_height() / 2
+        ball_x_direction = 1
+        ball_y_direction = 1
+
+
+    # paddle collision
+    if ball_x + ball_radius >= paddle_left and ball_x - ball_radius <= paddle_left + paddle_width and ball_y + ball_radius >= paddle_top and ball_y - ball_radius <= paddle_top + paddle_height:
+        ball_y_direction *= -1
+
     # resetting frame
     pygame.display.flip()
 
-    # setting fps and delta time
-    dt = clock.tick(60) / 1000
 
 pygame.quit()
