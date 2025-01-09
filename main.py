@@ -32,9 +32,15 @@ while running:
 
     # paddle movement
     if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-        paddle_left -= paddle_speed * dt
+        if paddle_left <= 0:
+            paddle_left = 0
+        else:
+            paddle_left -= paddle_speed * dt
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-        paddle_left += paddle_speed * dt
+        if paddle_left >= screen.get_width() - paddle_width:
+            paddle_left = screen.get_width() - paddle_width
+        else:
+            paddle_left += paddle_speed * dt
 
     # resetting frame
     pygame.display.flip()
