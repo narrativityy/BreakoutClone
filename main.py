@@ -13,6 +13,11 @@ paddle_left = screen.get_width() / 2 - paddle_width / 2
 paddle_top = screen.get_height() - paddle_height - 20
 paddle_speed = 800
 
+# ball attributes
+ball_x = screen.get_width() / 2
+ball_y = screen.get_height() / 2
+ball_radius = 20
+
 # game loop
 while running:
     for event in pygame.event.get():
@@ -25,7 +30,10 @@ while running:
     # main logic
 
     # drawing paddle
-    pygame.draw.rect(screen, 'white', (paddle_left, paddle_top, paddle_width, paddle_height), 0, 10)
+    pygame.draw.rect(screen, 'red', (paddle_left, paddle_top, paddle_width, paddle_height), 0, 10)
+
+    # drawing ball
+    pygame.draw.circle(screen, 'white', (ball_x, ball_y), ball_radius)
 
     # getting user input
     keys = pygame.key.get_pressed()
